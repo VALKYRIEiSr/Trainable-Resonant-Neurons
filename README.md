@@ -10,7 +10,7 @@ The repository consists of the following core components:
 
 * Trainable Resonant Neurons.pdf: The underlying research paper detailing the mathematical foundations, circuit stages, and benchmark results.
 * Training_data.ipynb: Handles the synthetic generation of controlled, multi-tone audio signal datasets used to rigorously test the models.
-* NN.ipynb: Implements the end-to-end machine learning pipeline, modeling the differentiable ordinary differential equations (ODEs) of the circuit and training the neural network.
+* NN.ipynb: Implements the end-to-end machine learning pipeline, modeling simplified mathematical forms of the circuit responses to minimize computational overhead during neural network training.
 
 ---
 
@@ -19,15 +19,13 @@ The repository consists of the following core components:
 Traditional analog front-ends rely on a Fixed Filter Bank (FFB) spread statically across a spectrum. A TRN replaces this rigid structure with a completely differentiable signal pipeline:
 
 Input Signal -> [ MFB Filter Stage ] -> [ Full-Wave Rectifier ] -> [ RC Envelope Smoothing ] -> Scalar Feature
-                    (Learns f0, Q)                                        (Learns Responsivity rho)
+                    (Learns f0, Q)                                        
 
 1. Filter Stage: Uses a Multiple Feedback (MFB) topology to adaptively tune the frequency response entirely in the circuit domain without inductor elements.
 2. Rectifier Stage: Converts the AC output of the filter step into a unipolar signal via full-wave rectification.
-3. Envelope Stage: Implements an RC smoothing circuit to extract stable amplitude envelopes, regulated by a fundamental responsivity-stability (rho, kappa) trade-off.
+3. Envelope Stage: Implements an RC smoothing circuit to extract stable amplitude envelopes, regulated by a parameterised responsivity-stability (rho, kappa) trade-off.
 
-To make the hardware simulation viable inside deep learning loops, the non-linear absolute values are smoothed via a square-root approximation:
-
-2 / (3 * pi * omega_0 * kappa) * (dv_e / dt) + v_e = sqrt((v_o)^2 + epsilon_1)
+To make the hardware simulation viable inside deep learning loops, the non-linear absolute values are smoothed via a square-root approximation
 
 ---
 
