@@ -1,1 +1,55 @@
-# Trainable-Resonant-Neurons
+# Trainable Resonant Neurons (TRNs) for Analog Neural Networks
+
+An end-to-end differentiable framework implementing Trainable Resonant Neurons (TRNs)--a novel alternative to standard fixed filter banks in Analog Neural Networks (ANNs). This architecture combines parameterized bandpass filters with an envelope detector stage to enable direct optimization of physical circuit features like center frequency (f0) and quality factor (Q) directly from raw signal data.
+
+---
+
+## Project Structure
+
+The repository consists of the following core components:
+
+* Trainable Resonant Neurons.pdf: The underlying research paper detailing the mathematical foundations, circuit stages, and benchmark results.
+* Training_data.ipynb: Handles the synthetic generation of controlled, multi-tone audio signal datasets used to rigorously test the models.
+* NN.ipynb: Implements the end-to-end machine learning pipeline, modeling the differentiable ordinary differential equations (ODEs) of the circuit and training the neural network.
+
+---
+
+## Overview and Architecture
+
+Traditional analog front-ends rely on a Fixed Filter Bank (FFB) spread statically across a spectrum. A TRN replaces this rigid structure with a completely differentiable signal pipeline:
+
+Input Signal -> [ MFB Filter Stage ] -> [ Full-Wave Rectifier ] -> [ RC Envelope Smoothing ] -> Scalar Feature
+                    (Learns f0, Q)                                        (Learns Responsivity rho)
+
+1. Filter Stage: Uses a Multiple Feedback (MFB) topology to adaptively tune the frequency response entirely in the circuit domain without inductor elements.
+2. Rectifier Stage: Converts the AC output of the filter step into a unipolar signal via full-wave rectification.
+3. Envelope Stage: Implements an RC smoothing circuit to extract stable amplitude envelopes, regulated by a fundamental responsivity-stability (rho, kappa) trade-off.
+
+To make the hardware simulation viable inside deep learning loops, the non-linear absolute values are smoothed via a square-root approximation:
+
+2 / (3 * pi * omega_0 * kappa) * (dv_e / dt) + v_e = sqrt((v_o)^2 + epsilon_1)
+
+---
+
+## Key Experimental Benchmarks
+
+The framework evaluates the adaptive TRN model against an FFB baseline across two primary configurations:
+
+### Task 1: Linear Spectral Separation (Dataset 1)
+* Condition: Clean multi-tone inputs evenly spaced across a 500-5,000 Hz band.
+* Result: Both architectures converged smoothly, approaching a peak classification performance of ~95% Accuracy. Static configurations suffice when boundary conditions are simple.
+
+### Task 2: High Noise and Irregular Spacing (Dataset 2)
+* Condition: Complex multi-tone signals corrupted by White Gaussian Noise (sigma = 2.0) and subtle, power-invariant frequency shifts.
+* Performance Gap:
+    * Fixed Filter Bank (FFB): Peaked at 78.45% Accuracy.
+    * Trainable Resonant Neuron (TRN): Reached 84.69% Accuracy.
+
+Note: As detailed in the paper, this absolute performance margin of ~6% acts as a lower bound under controlled parameters; the advantage scales dramatically when handling richer, real-world non-stationary data.
+
+---
+
+## Usage Summary
+
+1. Data Generation: Run Training_data.ipynb to construct the perturbed positive and negative signal waveforms.
+2. Model Optimization: Run NN.ipynb to initialize the TRN layers utilizing a logarithmic frequency partition baseline, map the steady-state or time-averaged scalar representations, and backpropagate error directly into f0 and Q.
