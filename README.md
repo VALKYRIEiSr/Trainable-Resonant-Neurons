@@ -9,7 +9,7 @@ An end-to-end differentiable framework implementing Trainable Resonant Neurons (
 The repository consists of the following core components:
 
 * Trainable Resonant Neurons.pdf: The underlying research paper detailing the mathematical foundations, circuit stages, and benchmark results.
-* Training_data.ipynb: Handles the synthetic generation of controlled, multi-tone audio signal datasets used to rigorously test the models.
+* Training_data.ipynb: Handles the synthetic generation of controlled, multi-tone audio signal datasets used to rigorously test the models (dataset 2).
 * NN.ipynb: Implements the end-to-end machine learning pipeline, modeling simplified mathematical forms of the circuit responses to minimize computational overhead during neural network training.
 
 ---
