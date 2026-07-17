@@ -50,4 +50,4 @@ Note: As detailed in the paper, this absolute performance margin of ~6% acts as 
 ## Usage Summary
 
 1. Data Generation: Run Training_data.ipynb to construct the perturbed positive and negative signal waveforms.
-2. Model Optimization: Run NN.ipynb to initialize the TRN layers utilizing a logarithmic frequency partition baseline, map the steady-state or time-averaged scalar representations, and backpropagate error directly into f0 and Q.
+2. Model Optimization and Metrics: Run NN.ipynb to execute the neural network pipeline on the generated training datasets and output performance metrics.
