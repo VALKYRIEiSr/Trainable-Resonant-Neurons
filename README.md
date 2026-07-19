@@ -6,8 +6,7 @@ An end-to-end differentiable framework implementing Trainable Resonant Neurons (
 
 Traditional analog front-ends rely on a Fixed Filter Bank (FFB) spread statically across a spectrum. A TRN replaces this rigid structure with a completely differentiable signal pipeline:
 
-    Input Signal -> [ MFB Filter Stage ] -> [ Full-Wave Rectifier ] -> [ RC Envelope Smoothing ] -> Scalar Feature
-                         (Learns f0, Q)
+Input Signal -> [ MFB Filter Stage ] -> [ Full-Wave Rectifier ] -> [ RC Envelope Smoothing ] -> Scalar Feature (Learns f0, Q)
 
 ## Technical Research
 The underlying mathematical foundations, circuit stages, and benchmark results are fully detailed in the included research document:
@@ -48,4 +47,4 @@ No formal license has been applied to this repository yet. All rights reserved t
 ---
 **Developer:** Hariz Zoran Farooq
 **Contact:** harizzoranfarooq@gmail.com
-**Status:** Independent research, self-published on SSRN, not peer-reviewed.
+**Status:** Independent research, not peer-reviewed.
